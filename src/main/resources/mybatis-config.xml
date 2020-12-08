@@ -14,7 +14,11 @@
     </settings>
 
     <typeAliases>
-        <typeAlias type="com.snow.pojo.Blog" alias="Blog"/>
+        <typeAlias type="com.snow.cjgl.pojo.Student" alias="Student"/>
+        <typeAlias type="com.snow.cjgl.pojo.Course" alias="Course"/>
+        <typeAlias type="com.snow.cjgl.pojo.Grade" alias="Grade"/>
+        <typeAlias type="com.snow.cjgl.pojo.TbClass" alias="TbClass"/>
+        <typeAlias type="com.snow.cjgl.pojo.SysUser" alias="SysUser"/>
     </typeAliases>
 
 
@@ -33,8 +37,8 @@
 
 
     <!--   绑定接口 -->
-<!--    <mappers>-->
-<!--        <mapper class="com.snow.dao.BlogMapper"/>-->
-<!--    </mappers>-->
+    <mappers>
+        <mapper class="com.snow.cjgl.dao.StudentMapper"/>
+    </mappers>
 
 </configuration>
