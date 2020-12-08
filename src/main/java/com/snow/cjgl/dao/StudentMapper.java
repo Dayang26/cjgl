@@ -3,6 +3,7 @@ package com.snow.cjgl.dao;
 import com.snow.cjgl.pojo.Student;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Snow
@@ -10,5 +11,11 @@ import java.util.List;
  */
 public interface StudentMapper {
 
-    List<Student> getStudentAll();
+
+    /**
+     * 13123
+     * @param map
+     * @return
+     */
+    List<Student> getStudentAll(Map map);
 }

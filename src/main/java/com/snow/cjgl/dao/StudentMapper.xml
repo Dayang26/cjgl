@@ -6,7 +6,7 @@
 <mapper namespace="com.snow.cjgl.dao.StudentMapper">
 
     <select id="getStudentAll" parameterType="map" resultType="Student">
-        select * from student
+        select * from abc.student
         <where>
             <if test="id != null">
                 id = #{id}

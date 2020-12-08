@@ -1,0 +1,16 @@
+@charset "UTF-8";
+.form-custom * {
+	margin: 0;
+	padding: 0;
+}
+
+.form-custom dt,.form-custom dd {
+	display: inline-block;
+}
+.form-custom dt {
+	width: 80px;
+	text-align: right;
+}
+.form-custom dl {
+	margin: 10px;
+}

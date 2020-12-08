@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>课程管理</title>
+    <link rel="stylesheet" href="../webjars/bootstrap/3.3.7/css/bootstrap.css">
+    <link rel="stylesheet" href="../webjars/bootstrap/3.3.7/css/bootstrap-theme.css">
+    <link rel="stylesheet" href="../webjars/bootstrapvalidator/0.5.3/css/bootstrapValidator.css">
+    <link rel="stylesheet" href="../webjars/bootstrap-table/1.16.0/bootstrap-table.css">
+    <script type="text/javascript" src="../webjars/jquery/1.11.1/jquery.js"></script>
+    <script type="text/javascript" src="../webjars/bootstrap/3.3.7/js/bootstrap.js"></script>
+    <script type="text/javascript" src="../webjars/bootstrap-table/1.16.0/bootstrap-table.js"></script>
+    <script type="text/javascript" src="../webjars/bootstrap-table/1.16.0/locale/bootstrap-table-zh-CN.js"></script>
+    <script type="text/javascript" src="../webjars/bootbox/5.4.0/bootbox.all.js"></script>
+    <script type="text/javascript" src="../webjars/bootstrapvalidator/0.5.3/js/bootstrapValidator.js"></script>
+    <script type="text/javascript" src="../webjars/bootstrapvalidator/0.5.3/js/language/zh_CN.js"></script>
+    <script type="text/javascript" src="../static/custom/custom.js"></script>
+</head>
+<body>
+<div class="container">
+    <!-- 查询对话框 -->
+    <form id="searchForm">
+        <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel">查询</h4>
+                    </div>
+                    <div class="modal-body">
+                        <!-- 以下为要查询的的内容 -->
+                        <div class="form-group">
+                            <label for="search_name">课程名称：</label>
+                            <input id="search_name" type="text" class="form-control" name="name" placeholder="课程名称">
+                        </div>
+                        <div class="form-group">
+                            <label for="search_username">课时数：</label>
+                            <input id="search_username" type="text" class="form-control" name="classHour"
+                                   placeholder="课时数">
+                        </div>
+                        <!-- 以上为要查询的内容 -->
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" onclick="query()" class="btn btn-primary" data-dismiss="modal"><span
+                                class="glyphicon glyphicon-search" aria-hidden="true"></span>&nbsp;查询
+                        </button>
+                        <button type="button" onclick="clearQuery()" class="btn btn-default" data-dismiss="modal"><span
+                                class="glyphicon glyphicon-trash" aria-hidden="true"></span>&nbsp;清空
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+
+    <!-- 表格，表头里定义了表要显示的字段，data-formatter 里只能跟一个方法名 -->
+    <table id="mytable">
+        <thead>
+        <tr>
+            <th data-checkbox="true"></th>
+            <th data-field="id">编号</th>
+            <th data-field="name">课程名称</th>
+            <th data-field="classHour">课时数</th>
+        </tr>
+        </thead>
+    </table>
+    <!-- 工具栏 -->
+    <div class="btn-group" id="toolbar">
+        <button onclick="addClick()" type="button" class="btn btn-default">
+            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>新增
+        </button>
+        <button onclick="editClick()" type="button" class="btn btn-default">
+            <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>修改
+        </button>
+        <button data-bind="click:deleteClick" type="button" class="btn btn-default">
+            <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>删除
+        </button>
+        <button onclick="search()" type="button" class="btn btn-default">
+            <span class="glyphicon glyphicon-search" aria-hidden="true"></span>查询
+        </button>
+    </div>
+
+</div>
+<script type="text/javascript">
+    function queryParams(param) {
+        var obj = $('#searchForm').serializeObject();
+        obj.limit = param.limit;
+        obj.offset = param.offset;
+        obj.search = param.search;
+        return obj;
+    }
+
+    function search() {
+        var dialog = $('#searchForm').find('div[role="dialog"]');
+        dialog.modal();
+    }
+
+    function query() {
+        $('#mytable').bootstrapTable('selectPage', 1);
+    }
+
+    function clearQuery() {
+        $('#searchForm').form('clear');
+        $('#mytable').bootstrapTable('selectPage', 1);
+    }
+
+    function addClick() {
+        var self = $('#mytable');
+        var dialog = $('<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"></div>');
+        dialog.load('edit', $('#searchForm').form('getParams'), function () {
+            $("body").append(dialog);
+            dialog.modal().on('hidden.bs.modal', function () {
+                dialog.remove();
+                self.bootstrapTable('refresh');
+            });
+        });
+    }
+
+    function editClick() {
+        var self = $('#mytable');
+        var selected = self.bootstrapTable('getSelections');
+        if (!selected.length) {
+            bootbox.alert('请选择一行再进行此操作');
+            return;
+        }
+        var dialog = $('<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"></div>');
+        dialog.load('edit', {id: selected[0].id}, function () {
+            $("body").append(dialog);
+            dialog.modal().on('hidden.bs.modal', function () {
+                dialog.remove();
+                self.bootstrapTable('refresh');
+            });
+        });
+
+    }
+
+    $(function () {
+        var table = $('#mytable');
+        table.bootstrapTable({
+            url: 'page',
+            toolbar: '#toolbar',                //工具按钮用哪个容器
+            //queryParams: function (param) {
+            //	return { limit: param.limit, offset: param.offset,search:param.search };
+            //},//传递参数（*）
+            queryParams: queryParams,
+            idField: 'id',
+            pagination: true,                   //是否显示分页（*）
+            sidePagination: "server",           //分页方式：client客户端分页，server服务端分页（*）
+            pageNumber: 1,                      //初始化加载第一页，默认第一页
+            pageSize: 5,                       //每页的记录行数（*）
+            pageList: [3, 5, 10, 30, 40],        //可供选择的每页的行数（*）
+            method: 'get',
+            search: true,                       //是否显示表格搜索，
+            //striped:true,
+            singleSelect: true,					//是否单选
+            strictSearch: true,
+            showColumns: true,                  //是否显示所有的列
+            cache: false,
+            showRefresh: true,                  //是否显示刷新按钮
+            minimumCountColumns: 2,             //最少允许的列数
+            clickToSelect: true,                //是否启用点击选中行
+            showToggle: true,
+
+        })
+    })
+
+</script>
+</body>
+</html>

@@ -1,0 +1,96 @@
+
+	<form id="formEdit" action="save" role="form">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					<h4 class="modal-title" id="myModalLabel">操作</h4>
+				</div>
+				<div class="modal-body">
+
+					<!-- 以下为要修改的的内容 -->
+
+					<input type="hidden" name="id" data-th-value="${model.id}">
+
+					<div class="form-group">
+						<label for="txt_name">课程名称</label>
+						<input type="text" name="name" data-th-value=${model.name} class="form-control" id="text_name" placeholder="课程名称">
+					</div>
+					
+					<div class="form-group">
+						<label for="txt_classHour">课时数</label>
+						<input type="text" name="classHour" data-th-value="${model.classHour}"
+								class="form-control" id="txt_classHour" placeholder="课时数">
+					</div>
+
+					<!-- 以上为要修改的内容 -->
+
+				</div>
+				<div class="modal-footer">
+					<button type="submit" class="btn btn-primary">
+						<span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>保存
+					</button>
+					<button type="button" class="btn btn-default" data-dismiss="modal">
+						<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>关闭
+					</button>
+				</div>
+			</div>
+		</div>
+	</form>
+	<script type="text/javascript" th:inline="javascript">
+		var options = {
+			message : '验证不通过',
+			feedbackIcons : {
+				valid : 'glyphicon glyphicon-ok',
+				invalid : 'glyphicon glyphicon-remove',
+				validating : 'glyphicon glyphicon-refresh'
+			},
+			fields : {
+				name : {
+					validators : {
+						notEmpty : {
+							message : '课程名不能为空'
+						}
+					}
+				},
+				classHour:{
+					validators : {
+						notEmpty: {
+							message:'课时数不能为空'
+						},
+						integer:{
+							message:'课时数必须为数字'
+						}
+
+					}
+				}
+			}
+		};
+		$('#formEdit').bootstrapValidator(options).on('success.form.bv',function(e) {
+			e.preventDefault(); //很重要没有它则会提交默认表单，不会做下面的ajax表单提交
+			var fd = new FormData($("#formEdit")[0]);
+			var url = $('#formEdit').attr('action');
+			$.ajax({
+				url : url,
+				type : "POST",
+				data : fd,
+				processData : false, // 不处理数据  
+				contentType : false, // 不设置内容类型
+				success : function(result) {
+					if (result.success) {
+						$('#myModal').modal("hide");
+					} else {
+						bootbox.alert(result.msg);
+					}
+				},
+				error : function(result) {
+					bootbox.alert("保存请求发送失败，请检查网络是否连通");
+				}
+			});
+		});
+		
+	</script>
+
