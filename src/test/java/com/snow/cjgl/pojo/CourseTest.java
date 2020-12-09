@@ -19,11 +19,25 @@ public class CourseTest {
         SqlSession sqlSession = MybatisUtils.getSqlSession();
         CourseMapper mapper = sqlSession.getMapper(CourseMapper.class);
         HashMap map = new HashMap();
+//        map.put("name","语文");
+//        map.put("id","1");
         List<Course> courseAll = mapper.getCourseAll(map);
         for (Course course : courseAll) {
             System.out.println(course);
         }
 
+        sqlSession.close();
+    }
+
+    @Test
+    public void addCourse() {
+        SqlSession sqlSession = MybatisUtils.getSqlSession();
+        CourseMapper mapper = sqlSession.getMapper(CourseMapper.class);
+        HashMap map = new HashMap();
+        map.put("name", "css");
+        map.put("classHour", "111");
+        int i = mapper.addCourse(map);
+        System.out.println(i);
         sqlSession.close();
     }
 }

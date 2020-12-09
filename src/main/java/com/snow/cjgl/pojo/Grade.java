@@ -13,6 +13,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Grade {
+    private Integer id;
     private Student student;
     private Course course;
     private Integer grade;

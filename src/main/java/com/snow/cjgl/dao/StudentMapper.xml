@@ -12,7 +12,7 @@
                 id = #{id}
             </if>
             <if test="stuNo != null">
-                stuNo = #{stuNo}
+               and stuNo = #{stuNo}
             </if>
         </where>
     </select>

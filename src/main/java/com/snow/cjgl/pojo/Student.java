@@ -14,6 +14,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Student {
+    private Integer id;
     private TbClass tbClass;
     private String stuNo;
     private String fileName;

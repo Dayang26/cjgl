@@ -13,6 +13,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class TbClass {
+    private Integer id;
     private String name;
     private String manager;
 

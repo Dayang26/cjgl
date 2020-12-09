@@ -11,5 +11,22 @@ import java.util.Map;
  */
 public interface CourseMapper {
 
+    /**
+     * 动态sql查询
+     * @param map
+     * @return
+     */
     List<Course> getCourseAll(Map map);
+
+
+    /**
+     * 新增课程
+     * 课程名称和课时可以为空！！！！
+     * @param map
+     * @return
+     */
+    int addCourse(Map map);
+
+
+    int updateCourse(Map map);
 }

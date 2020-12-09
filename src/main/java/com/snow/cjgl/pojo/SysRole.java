@@ -17,6 +17,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class SysRole {
+    private Integer id;
     private String name;
     private String code;
     @JsonIgnore
