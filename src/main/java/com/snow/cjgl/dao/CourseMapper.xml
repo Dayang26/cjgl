@@ -11,27 +11,36 @@
                 id = #{id}
             </if>
             <if test="name != null">
-               and name = #{name}
+                and name = #{name}
             </if>
             <if test="classHour != null">
-               and classHour = #{classHour}
+                and classHour = #{classHour}
             </if>
         </where>
     </select>
 
     <insert id="addCourse" parameterType="map">
-        INSERT INTO abc.course (name,class_hour) VALUES (#{name},#{classHour})
+        INSERT INTO abc.course (name, class_hour)
+        VALUES (#{name}, #{classHour})
     </insert>
-    
+
     <update id="updateCourse" parameterType="map">
         update abc.course
-        <if test="name != null">
-            set name = #{name}
-        </if>
-       <if test="classHour != null">
-           ,
-       </if>
-        where;
+        <set>
+            <if test="name != null">
+                name = #{name},
+            </if>
+            <if test="classHour != null">
+                class_hour = #{classHour}
+            </if>
+        </set>
+        where id = #{id};
     </update>
+
+    <delete id="deleteCourse" parameterType="map">
+        DELETE
+        FROM abc.course
+        where id = #{id}
+    </delete>
 
 </mapper>

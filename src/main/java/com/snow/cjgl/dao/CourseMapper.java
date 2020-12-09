@@ -13,6 +13,7 @@ public interface CourseMapper {
 
     /**
      * 动态sql查询
+     *
      * @param map
      * @return
      */
@@ -22,11 +23,28 @@ public interface CourseMapper {
     /**
      * 新增课程
      * 课程名称和课时可以为空！！！！
+     *
      * @param map
      * @return
      */
     int addCourse(Map map);
 
-
+    /**
+     * 通过id修改
+     * 如果有那么就修改name
+     * 如果课时就修改课时
+     * 如果两者都有全修改。
+     *
+     * @param map
+     * @return
+     */
     int updateCourse(Map map);
+
+    /**
+     * 通过id删除
+     *
+     * @param map
+     * @return
+     */
+    int deleteCourse(Map map);
 }

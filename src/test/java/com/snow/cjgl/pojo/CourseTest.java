@@ -40,4 +40,30 @@ public class CourseTest {
         System.out.println(i);
         sqlSession.close();
     }
+
+    @Test
+    public void updateCourse() {
+        SqlSession sqlSession = MybatisUtils.getSqlSession();
+        CourseMapper mapper = sqlSession.getMapper(CourseMapper.class);
+        HashMap map = new HashMap();
+        map.put("id", "10");
+        map.put("name", "pppd");
+        map.put("classHour", "121");
+        int i = mapper.updateCourse(map);
+        System.out.println(i);
+        sqlSession.close();
+    }
+
+    @Test
+    public void deleteCourse() {
+        SqlSession sqlSession = MybatisUtils.getSqlSession();
+        CourseMapper mapper = sqlSession.getMapper(CourseMapper.class);
+        HashMap map = new HashMap();
+        map.put("id", "10");
+        int i = mapper.deleteCourse(map);
+        System.out.println(i);
+        sqlSession.close();
+    }
+
+
 }

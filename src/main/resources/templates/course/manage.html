@@ -1,7 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<html xmlns:th="http://www.thymeleaf.org"  lang="en">
 <head>
     <meta charset="UTF-8">
     <title>课程管理</title>
@@ -26,7 +24,8 @@
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                aria-hidden="true">&times;</span></button>
                         <h4 class="modal-title" id="myModalLabel">查询</h4>
                     </div>
                     <div class="modal-body">
@@ -37,13 +36,18 @@
                         </div>
                         <div class="form-group">
                             <label for="search_username">课时数：</label>
-                            <input id="search_username" type="text" class="form-control" name="classHour" placeholder="课时数">
+                            <input id="search_username" type="text" class="form-control" name="classHour"
+                                   placeholder="课时数">
                         </div>
                         <!-- 以上为要查询的内容 -->
                     </div>
                     <div class="modal-footer">
-                        <button type="button" onclick="query()" class="btn btn-primary" data-dismiss="modal"><span class="glyphicon glyphicon-search" aria-hidden="true"></span>&nbsp;查询</button>
-                        <button type="button" onclick="clearQuery()" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span>&nbsp;清空</button>
+                        <button type="button" onclick="query()" class="btn btn-primary" data-dismiss="modal"><span
+                                class="glyphicon glyphicon-search" aria-hidden="true"></span>&nbsp;查询
+                        </button>
+                        <button type="button" onclick="clearQuery()" class="btn btn-default" data-dismiss="modal"><span
+                                class="glyphicon glyphicon-trash" aria-hidden="true"></span>&nbsp;清空
+                        </button>
                     </div>
                 </div>
             </div>
@@ -73,37 +77,37 @@
         <button data-bind="click:deleteClick" type="button" class="btn btn-default">
             <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>删除
         </button>
-        <button onclick="search()" type="button"	class="btn btn-default">
+        <button onclick="search()" type="button" class="btn btn-default">
             <span class="glyphicon glyphicon-search" aria-hidden="true"></span>查询
         </button>
     </div>
 
 </div>
 <script type="text/javascript">
-    function queryParams(param){
-        var obj=$('#searchForm').serializeObject();
-        obj.limit=param.limit;
-        obj.offset=param.offset;
-        obj.search=param.search;
+    function queryParams(param) {
+        var obj = $('#searchForm').serializeObject();
+        obj.limit = param.limit;
+        obj.offset = param.offset;
+        obj.search = param.search;
         return obj;
     }
 
-    function search(){
-        var dialog=$('#searchForm').find('div[role="dialog"]');
+    function search() {
+        var dialog = $('#searchForm').find('div[role="dialog"]');
         dialog.modal();
     }
 
-    function query(){
-        $('#mytable').bootstrapTable('selectPage',1);
+    function query() {
+        $('#mytable').bootstrapTable('selectPage', 1);
     }
 
-    function clearQuery(){
+    function clearQuery() {
         $('#searchForm').form('clear');
-        $('#mytable').bootstrapTable('selectPage',1);
+        $('#mytable').bootstrapTable('selectPage', 1);
     }
 
-    function addClick(){
-        var self=$('#mytable');
+    function addClick() {
+        var self = $('#mytable');
         var dialog = $('<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"></div>');
         dialog.load('edit', $('#searchForm').form('getParams'), function () {
             $("body").append(dialog);
@@ -114,15 +118,15 @@
         });
     }
 
-    function editClick(){
-        var self=$('#mytable');
-        var selected=self.bootstrapTable('getSelections');
-        if(!selected.length){
+    function editClick() {
+        var self = $('#mytable');
+        var selected = self.bootstrapTable('getSelections');
+        if (!selected.length) {
             bootbox.alert('请选择一行再进行此操作');
             return;
         }
         var dialog = $('<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"></div>');
-        dialog.load('edit', {id:selected[0].id}, function () {
+        dialog.load('edit', {id: selected[0].id}, function () {
             $("body").append(dialog);
             dialog.modal().on('hidden.bs.modal', function () {
                 dialog.remove();
@@ -132,28 +136,28 @@
 
     }
 
-    $(function(){
-        var table=$('#mytable');
+    $(function () {
+        var table = $('#mytable');
         table.bootstrapTable({
-            url:'page',
+            url: 'page',
             toolbar: '#toolbar',                //工具按钮用哪个容器
             //queryParams: function (param) {
             //	return { limit: param.limit, offset: param.offset,search:param.search };
             //},//传递参数（*）
-            queryParams:queryParams,
+            queryParams: queryParams,
             idField: 'id',
             pagination: true,                   //是否显示分页（*）
             sidePagination: "server",           //分页方式：client客户端分页，server服务端分页（*）
             pageNumber: 1,                      //初始化加载第一页，默认第一页
             pageSize: 5,                       //每页的记录行数（*）
-            pageList: [3,5,10,30, 100, 200],        //可供选择的每页的行数（*）
+            pageList: [3, 5, 10, 30, 100, 200],        //可供选择的每页的行数（*）
             method: 'get',
             search: true,                       //是否显示表格搜索，
             //striped:true,
-            singleSelect:true,					//是否单选
+            singleSelect: true,					//是否单选
             strictSearch: true,
             showColumns: true,                  //是否显示所有的列
-            cache:false,
+            cache: false,
             showRefresh: true,                  //是否显示刷新按钮
             minimumCountColumns: 2,             //最少允许的列数
             clickToSelect: true,                //是否启用点击选中行
