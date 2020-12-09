@@ -3,8 +3,19 @@
         PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper>
-
-
-
+<mapper namespace="com.snow.cjgl.dao.CourseMapper">
+    <select id="getCourseAll" parameterType="map" resultType="Course">
+        select * from abc.course
+        <where>
+            <if test="id != null">
+                id = #{id}
+            </if>
+            <if test="name != null">
+                name = #{name}
+            </if>
+            <if test="classHour != null">
+                classHour = #{classHour}
+            </if>
+        </where>
+    </select>
 </mapper>

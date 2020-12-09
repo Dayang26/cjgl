@@ -20,7 +20,7 @@ public class StudentTest {
         StudentMapper mapper = sqlSession.getMapper(StudentMapper.class);
 
         HashMap map = new HashMap();
-//        map.put("id","2");
+        map.put("id","2");
 
         List<Student> studentAll = mapper.getStudentAll(map);
 
