@@ -1,6 +1,7 @@
 package com.snow.cjgl.dao;
 
 import com.snow.cjgl.pojo.Course;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 import java.util.Map;
@@ -18,6 +19,14 @@ public interface CourseMapper {
      * @return
      */
     List<Course> getCourseAll(Map map);
+
+    /**
+     *
+     *fasdf
+     * @param id
+     * @return
+     */
+    Course getCourseById(@Param("id") int id);
 
 
     /**

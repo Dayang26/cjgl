@@ -65,5 +65,24 @@ public class CourseTest {
         sqlSession.close();
     }
 
+    @Test
+    public void getCourseById() {
+        SqlSession sqlSession = MybatisUtils.getSqlSession();
+        CourseMapper mapper = sqlSession.getMapper(CourseMapper.class);
+        Course courseById = mapper.getCourseById(1);
+        System.out.println("courseById"+"="+courseById);
+        sqlSession.close();
+
+        SqlSession sqlSession1 = MybatisUtils.getSqlSession();
+        CourseMapper mapper1 = sqlSession1.getMapper(CourseMapper.class);
+        Course courseById1 = mapper1.getCourseById(1);
+        System.out.println("courseById1"+"="+courseById1);
+        sqlSession.close();
+
+        System.out.println(courseById==courseById1);
+        System.out.println(courseById.equals(courseById1));
+
+    }
+
 
 }
